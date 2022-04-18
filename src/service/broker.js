@@ -12,7 +12,6 @@ export const producer = data => {
     } else {
       console.log('client connected');
       console.log(client);
-
       client.send(destination, {}, JSON.stringify(data));
       client.disconnect();
     }

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { producer } from '../service/broker';
+import { Button, Form } from 'react-bootstrap';
+import RangeSlider from 'react-bootstrap-range-slider';
 import './SensorForm.css';
 
 const SensorForm = () => {
   const [tipo, setTipo] = useState('');
-  const [max, setMax] = useState('');
-  const [min, setMin] = useState('');
+  const [max, setMax] = useState(0);
+  const [min, setMin] = useState(0);
   const [value, setValue] = useState('');
   const [id, setId] = useState(0);
   const [sensor, setSensor] = useState(false);
@@ -93,56 +95,29 @@ const SensorForm = () => {
                 />
               </div>
             </div>
-            <button className="button-submit" type="submit">
-              <span>Enviar</span>
-            </button>
+            <Button variant="outline-primary">Enviar</Button>
           </form>
         </div>
       ) : (
-        <form onSubmit={handleSubmit}>
-          <div className="radio-group">
-            <span className="title">Defina o tipo de sensor:</span>
-            <div className="radio-group-item">
-              <input
-                type="radio"
-                name="tipo"
-                value="temperatura"
-                onChange={e => setTipo(e.target.value)}
-              />
-              <label>Temperatura</label>
-            </div>
-            <div className="radio-group-item">
-              <input
-                type="radio"
-                name="tipo"
-                value="umidade"
-                onChange={e => setTipo(e.target.value)}
-              />
-              <label>Umidade</label>
-            </div>
-            <div className="radio-group-item">
-              <input
-                type="radio"
-                name="tipo"
-                value="velocidade"
-                onChange={e => setTipo(e.target.value)}
-              />
-              <label>Velocidade</label>
-            </div>
-          </div>
-
+        <Form onSubmit={handleSubmit}>
+          <h1 className="title">Sensor:</h1>
+          <Form.Select
+            aria-label="Default select example"
+            onChange={e => setTipo(e.target.value)}
+          >
+            <option> Selecione</option>
+            <option value="temperatura">Temperatura (graus)</option>
+            <option value="umidade">Umidade (g/Kg)</option>
+            <option value="velocidade">Velocidade (km/h)</option>
+          </Form.Select>
           <div className="field-group">
             <span className="title">Defina os valores:</span>
             <div className="form-field">
               <label>Mínimo:</label>
-              <input
-                type="text"
-                name="min"
+              <RangeSlider
                 value={min}
-                onChange={e => setMin(e.target.value)}
+                onChange={changeEvent => setMin(changeEvent.target.value)}
               />
-            </div>
-            <div className="form-field">
               <label>Máximo:</label>
               <input
                 type="text"
@@ -152,11 +127,8 @@ const SensorForm = () => {
               />
             </div>
           </div>
-
-          <button className="button-submit" type="submit">
-            <span>Enviar</span>
-          </button>
-        </form>
+          <Button variant="outline-primary">Enviar</Button>
+        </Form>
       )}
     </div>
   );

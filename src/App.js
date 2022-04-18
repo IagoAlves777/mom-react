@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css';
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Client, Home, SensorForm } from './pages';
@@ -7,7 +8,7 @@ function App() {
   return (
     <>
       <div className="header">
-        <span>SENSOR</span>
+        <h1>Middleware Orientado a Mensagens - MOM</h1>
       </div>
       <div className="content">
         <Router>
