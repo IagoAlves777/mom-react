@@ -1,0 +1,54 @@
+.client {
+  grid-column: auto auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  width: 70%;
+  padding: 40px;
+  border: 1px solid #e4e4e4;
+}
+
+.list-topic {
+  display: flex;
+  flex-direction: column;
+}
+
+.list-topic ul {
+  list-style: none;
+}
+
+.list-topic li {
+  padding: 5px;
+  margin: 10px;
+  cursor: pointer;
+  border: 1px solid #e4e4e4;
+}
+
+.list-topic-item-selected {
+  background-color: #e4e4e4;
+}
+
+.topic {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 15px;
+}
+
+.topic .type {
+  text-transform: capitalize;
+}
+
+.topic .value {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.topic .message-high {
+  color: red;
+}
+
+.topic .message-low {
+  color: blue;
+}
