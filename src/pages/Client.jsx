@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Button } from 'react-bootstrap';
 import Stomp from 'stompjs';
 
 import './Client.css';
@@ -6,8 +7,8 @@ import './Client.css';
 const Client = () => {
   const [message, setMessage] = useState({});
   const [topic, setTopic] = useState('');
-
   const destinations = JSON.parse(localStorage.getItem('listSensor'));
+  
 
   useEffect(() => {
     if (topic) {
@@ -30,6 +31,10 @@ const Client = () => {
     }
   }, [topic]);
 
+  const deletarTudo = () => {
+    localStorage.removeItem('listSensor');
+    console.log("🚀 ~ file: Client.jsx ~ line 36 ~ deletarTudo ~ localStorage", localStorage)
+  }
   return (
     <div className="client">
       <div className="list-topic">
@@ -48,7 +53,7 @@ const Client = () => {
           </ul>
         ) : (
           <div>
-            <span>Cliente preparado para receber mensagens</span>
+            Cliente preparado para receber mensagens
           </div>
         )}
       </div>
@@ -66,6 +71,9 @@ const Client = () => {
           <span className="wait">Aguardando nova mensagem</span>
         )}
       </div>
+      <Button onClick={() => deletarTudo()}>
+        Delete TUDO! 
+      </Button>
     </div>
   );
 };

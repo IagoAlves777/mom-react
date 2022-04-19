@@ -11,6 +11,9 @@ const SensorForm = () => {
   const [value, setValue] = useState('');
   const [id, setId] = useState(0);
   const [sensor, setSensor] = useState(false);
+  const [rangeMax, setRangeMax] = useState(100);
+  const [rangeMin, setRangeMin] = useState(0);
+  const [enable, setEnable] = useState(true);
 
   const saveTopic = (topic, id) => {
     const listSensor = localStorage.getItem('listSensor')
@@ -36,6 +39,25 @@ const SensorForm = () => {
       localStorage.getItem('listSensor') &&
       JSON.parse(localStorage.getItem('listSensor')).includes(`${tipo}-${id}`)
     );
+  };
+
+  const pickType = type => {
+    setMax(0);
+    setMin(0);
+    if (type === 'temperatura') {
+      setRangeMax(300);
+      setRangeMin(-274);
+    }
+    if (type === 'umidade') {
+      setRangeMax(100);
+      setRangeMin(0);
+    }
+    if (type === 'velocidade') {
+      setRangeMax(300);
+      setRangeMin(0);
+    }
+    setEnable(false);
+    setTipo(type);
   };
 
   const handleSubmit = e => {
@@ -71,6 +93,7 @@ const SensorForm = () => {
       value,
       message,
     });
+    console.log("🚀 ~ file: SensorForm.jsx ~ line 91 ~ SensorForm ~ producer", producer)
   };
 
   return (
@@ -87,7 +110,7 @@ const SensorForm = () => {
             <div className="field-group">
               <div className="form-field">
                 <label>{`Digite o valor da ${tipo}:`}</label>
-                <input
+                <Form.Control
                   type="text"
                   name="value"
                   value={value}
@@ -95,7 +118,7 @@ const SensorForm = () => {
                 />
               </div>
             </div>
-            <Button variant="outline-primary">Enviar</Button>
+            <Button variant="outline-primary" type="submit">Enviar</Button>
           </form>
         </div>
       ) : (
@@ -103,31 +126,55 @@ const SensorForm = () => {
           <h1 className="title">Sensor:</h1>
           <Form.Select
             aria-label="Default select example"
-            onChange={e => setTipo(e.target.value)}
+            onChange={e => pickType(e.target.value)}
           >
             <option> Selecione</option>
             <option value="temperatura">Temperatura (graus)</option>
-            <option value="umidade">Umidade (g/Kg)</option>
             <option value="velocidade">Velocidade (km/h)</option>
+            <option value="umidade">Umidade (g/Kg)</option>
           </Form.Select>
           <div className="field-group">
             <span className="title">Defina os valores:</span>
             <div className="form-field">
-              <label>Mínimo:</label>
+              <div className="control">
+                <label>Mínimo:</label>
+                <Form.Control
+                  id='rangeControl'
+                  type="text"
+                  value={min}
+                  onChange={e => setMin(e.target.value)}
+                  disabled={enable}
+                />
+              </div>
               <RangeSlider
+                max={rangeMax}
+                min={rangeMin}
                 value={min}
-                onChange={changeEvent => setMin(changeEvent.target.value)}
+                onChange={e => setMin(e.target.value)}
+                disabled={enable}
               />
-              <label>Máximo:</label>
-              <input
-                type="text"
-                name="max"
+              <div className="control">
+                <label>Máximo:</label>
+                <Form.Control
+                  id='rangeControl'
+                  type="text"
+                  value={max}
+                  onChange={e => setMax(e.target.value)}
+                  disabled={enable}
+                />
+              </div>
+              <RangeSlider
+                max={rangeMax}
+                min={rangeMin}
                 value={max}
                 onChange={e => setMax(e.target.value)}
+                disabled={enable}
               />
             </div>
           </div>
-          <Button variant="outline-primary">Enviar</Button>
+          <Button variant="outline-primary" type="submit" disabled={enable}>
+            Enviar
+          </Button>
         </Form>
       )}
     </div>

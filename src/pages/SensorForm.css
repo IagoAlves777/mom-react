@@ -15,57 +15,35 @@
   margin-right: 20px;
 }
 
-.sensor-send {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.radio-group {
-  display: flex;
-  flex-direction: column;
-}
-
-.radio-group-item {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin: 10px;
-}
 
 .title {
   font-size: 22px;
   font-weight: 700;
 }
 
-.form-field {
-  margin: 10px;
+
+.field-group{
+  margin-top: 30px;
 }
 
-.form-field label {
-  margin-right: 10px;
-}
-
-.form-field input {
-  border-radius: 8px;
-  border: 2px solid #aaaaaa;
-  box-shadow: inset 0 1px rgb(255 255 255 / 10%), inset 0 0 0 1px rgb(255 255 255 / 8%),
-    0 1px 2px rgb(0 0 0 / 25%);
-}
-
-.button-submit {
-  background: #1097e6;
-  border-color: #0d78b6 #0d78b6 #0b689e;
-  background-image: linear-gradient(to bottom, #25a5f0, #1097e6 66%, #0f8ad3);
-}
 
 form{
   display: flex;
   justify-content: center;
   flex-direction: column;
+}
+
+.control{
+  display: flex;
   align-items: center;
 }
 
-.btn{
-  max-width: 30%;
+.form-control{
+  margin-top: 5px;
+}
+
+#rangeControl{
+  max-width: 80px;
+  max-height: 30px;
+  margin-left: 10px;
 }
