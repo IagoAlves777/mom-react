@@ -69,6 +69,7 @@ const SensorForm = () => {
       setId(getIdSensor());
       setSensor(true);
     }
+    
   };
 
   const handleValue = e => {
@@ -93,7 +94,6 @@ const SensorForm = () => {
       value,
       message,
     });
-    console.log("🚀 ~ file: SensorForm.jsx ~ line 91 ~ SensorForm ~ producer", producer)
   };
 
   return (
@@ -118,7 +118,9 @@ const SensorForm = () => {
                 />
               </div>
             </div>
-            <Button variant="outline-primary" type="submit">Enviar</Button>
+            <Button variant="outline-primary" type="submit">
+              Enviar
+            </Button>
           </form>
         </div>
       ) : (
@@ -139,7 +141,7 @@ const SensorForm = () => {
               <div className="control">
                 <label>Mínimo:</label>
                 <Form.Control
-                  id='rangeControl'
+                  id="rangeControl"
                   type="text"
                   value={min}
                   onChange={e => setMin(e.target.value)}
@@ -156,7 +158,7 @@ const SensorForm = () => {
               <div className="control">
                 <label>Máximo:</label>
                 <Form.Control
-                  id='rangeControl'
+                  id="rangeControl"
                   type="text"
                   value={max}
                   onChange={e => setMax(e.target.value)}

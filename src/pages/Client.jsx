@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
-import Stomp from 'stompjs';
+import Stomp, { client } from 'stompjs';
 
 import './Client.css';
 
@@ -8,7 +8,6 @@ const Client = () => {
   const [message, setMessage] = useState({});
   const [topic, setTopic] = useState('');
   const destinations = JSON.parse(localStorage.getItem('listSensor'));
-  
 
   useEffect(() => {
     if (topic) {
@@ -27,53 +26,66 @@ const Client = () => {
             setMessage({ type: msg.tipo, message: msg.message, value: msg.value });
           });
         }
-      });
+      })
     }
   }, [topic]);
 
   const deletarTudo = () => {
     localStorage.removeItem('listSensor');
-    console.log("🚀 ~ file: Client.jsx ~ line 36 ~ deletarTudo ~ localStorage", localStorage)
+    console.log(
+      '🚀 ~ file: Client.jsx ~ line 36 ~ deletarTudo ~ localStorage',
+      localStorage
+    );
+    document.location.reload(true);
+  };
+
+  const atualizar = () => {
+    document.location.reload(true);
   }
   return (
     <div className="client">
-      <div className="list-topic">
-        <span className="title">Lista de tópicos:</span>
-        {!!destinations ? (
-          <ul>
-            {destinations.map((destination, index) => (
-              <li
-                className={`list-topic-item${topic === destination ? '-selected' : ''}`}
-                key={index}
-                onClick={() => setTopic(destination)}
-              >
-                <span>{destination}</span>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <div>
-            Cliente preparado para receber mensagens
-          </div>
-        )}
-      </div>
+      <div className="content">
+        <div className="list-topic">
+          <span className="title">Lista de tópicos:</span>
+          {!!destinations ? (
+            <ul>
+              {destinations.map((destination, index) => (
+                <li
+                  className={`list-topic-item${topic === destination ? '-selected' : ''}`}
+                  key={index}
+                  onClick={() => setTopic(destination)}
+                >
+                  <span>{destination}</span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div>Cliente preparado para receber mensagens</div>
+          )}
+        </div>
 
-      <div className="message">
-        {topic && message.value ? (
-          <div className="topic">
-            <span className="type">{message.type}</span>
-            <span className="value">{message.value}</span>
-            <span
-              className={`message${message.message === 'alto' ? '-high' : '-low'}`}
-            >{`O valor está ${message.message}`}</span>
-          </div>
-        ) : (
-          <span className="wait">Aguardando nova mensagem</span>
-        )}
+        <div className="message">
+          {topic && message.value ? (
+            <div className="topic">
+              <span className="type">{message.type}</span>
+              <span className="value">{message.value}</span>
+              <span
+                className={`message${message.message === 'alto' ? '-high' : '-low'}`}
+              >{`O valor está ${message.message}`}</span>
+            </div>
+          ) : (
+            <span className="wait">Aguardando nova mensagem</span>
+          )}
+        </div>
       </div>
-      <Button onClick={() => deletarTudo()}>
-        Delete TUDO! 
-      </Button>
+      <div>
+        <Button variant="outline-primary" onClick={() => atualizar()}>
+          Atualizar
+        </Button>
+        <Button variant="outline-danger" onClick={() => deletarTudo()}>
+          Apagar tudo
+        </Button>
+      </div>
     </div>
   );
 };
