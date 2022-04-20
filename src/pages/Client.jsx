@@ -7,6 +7,7 @@ import './Client.css';
 const Client = () => {
   const [message, setMessage] = useState({});
   const [topic, setTopic] = useState('');
+  const [topicId, setTopicId] = useState(0);
   const destinations = JSON.parse(localStorage.getItem('listSensor'));
 
   useEffect(() => {
@@ -23,7 +24,7 @@ const Client = () => {
           client.subscribe(`/topic/${topic}`, (message, headers) => {
             const msg = JSON.parse(message.body);
             console.log(msg);
-            setMessage({ type: msg.tipo, message: msg.message, value: msg.value });
+            setMessage({ id:msg.id ,type: msg.tipo, message: msg.message, value: msg.value });
           });
         }
       })
@@ -42,6 +43,13 @@ const Client = () => {
   const atualizar = () => {
     document.location.reload(true);
   }
+
+  const topicSet = (destination) => {
+    setTopic(destination);
+    let id = destination.replace(/[^0-9]/g,'');
+    setTopicId(Number(id));
+  }
+
   return (
     <div className="client">
       <div className="content">
@@ -53,7 +61,7 @@ const Client = () => {
                 <li
                   className={`list-topic-item${topic === destination ? '-selected' : ''}`}
                   key={index}
-                  onClick={() => setTopic(destination)}
+                  onClick={() => topicSet(destination)}
                 >
                   <span>{destination}</span>
                 </li>
@@ -65,9 +73,10 @@ const Client = () => {
         </div>
 
         <div className="message">
-          {topic && message.value ? (
+          {topic && message.value && message.id === topicId ? (
             <div className="topic">
               <span className="type">{message.type}</span>
+              
               <span className="value">{message.value}</span>
               <span
                 className={`message${message.message === 'alto' ? '-high' : '-low'}`}
@@ -89,5 +98,6 @@ const Client = () => {
     </div>
   );
 };
-
+  
+  
 export default Client;

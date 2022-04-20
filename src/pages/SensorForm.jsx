@@ -26,6 +26,7 @@ const SensorForm = () => {
     localStorage.setItem('listSensor', JSON.stringify(listSensor));
   };
 
+
   const getIdSensor = () => {
     const idSensor = localStorage.getItem('idSensor');
     if (idSensor === null) {
@@ -96,6 +97,7 @@ const SensorForm = () => {
     });
   };
 
+
   return (
     <div className="sensor">
       {sensor ? (
@@ -111,7 +113,7 @@ const SensorForm = () => {
               <div className="form-field">
                 <label>{`Digite o valor da ${tipo}:`}</label>
                 <Form.Control
-                  type="text"
+                  type="number"
                   name="value"
                   value={value}
                   onChange={e => setValue(e.target.value)}
@@ -142,7 +144,7 @@ const SensorForm = () => {
                 <label>Mínimo:</label>
                 <Form.Control
                   id="rangeControl"
-                  type="text"
+                  type="number"
                   value={min}
                   onChange={e => setMin(e.target.value)}
                   disabled={enable}
@@ -159,7 +161,7 @@ const SensorForm = () => {
                 <label>Máximo:</label>
                 <Form.Control
                   id="rangeControl"
-                  type="text"
+                  type="number"
                   value={max}
                   onChange={e => setMax(e.target.value)}
                   disabled={enable}
